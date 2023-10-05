@@ -13,7 +13,29 @@ extension EquatableMacro: ExtensionMacro {
         in context: some MacroExpansionContext
     ) throws -> [ExtensionDeclSyntax] {
         
-        return []
+        let vars = declaration.as(ClassDeclSyntax.self)?.memberBlock.members.compactMap( { $0.decl.as(VariableDeclSyntax.self) }) ?? []
+        
+        // e.g. ["let name: String", "let age: Int"]
+        
+        let identifiers = vars.compactMap({ $0.bindings.first?.pattern.as(IdentifierPatternSyntax.self) })
+        
+        // e.g. ["name", "age"]
+        
+        let comparisions = identifiers.map({ "lhs.\($0.description) == rhs.\($0.description)" })
+        
+        // e.g. ["lhs.name == rhs.name", "lhs.age == rhs.age"]
+        
+        let decl = try ExtensionDeclSyntax(
+        #"""
+        extension \#(type.trimmed): Equatable {
+        static func == (lhs: \#(type.trimmed), rhs: \#(type.trimmed)) -> Bool {
+            \#(raw: comparisions.joined(separator: "&&"))
+        }
+        }
+        """#
+        )
+        
+        return [decl]
         
     }
     

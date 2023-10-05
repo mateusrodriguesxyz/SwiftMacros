@@ -183,7 +183,6 @@ final class SwiftMacrosTests: XCTestCase {
             expandedSource:
             #"""
             struct Person {
-                var _storage: [AnyHashable: Any] = [:]
                 var name: String = "John Appleseed" {
                     get {
                         _storage["name", default: "John Appleseed"] as! String

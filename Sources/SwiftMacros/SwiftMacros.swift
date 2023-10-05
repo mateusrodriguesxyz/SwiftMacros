@@ -1,4 +1,5 @@
 import Foundation
+import CloudKit
 
 @freestanding(expression)
 public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "SwiftMacrosImplementation", type: "StringifyMacro")
@@ -30,3 +31,13 @@ public macro DictionaryStorage() = #externalMacro(module: "SwiftMacrosImplementa
 
 @attached(accessor, names: named(`didSet`))
 public macro PrintOnSet() = #externalMacro(module: "SwiftMacrosImplementation", type: "PrintOnSetMacro")
+
+
+public protocol CloudKitModel {
+    var record: CKRecord { get }
+}
+
+@attached(extension, conformances: CloudKitModel) // ExtensionMacro
+@attached(member, names: named(record), named(`init`)) // MemberMacro
+@attached(memberAttribute) // MemberAttributeMacro
+public macro CloudKitModel() = #externalMacro(module: "SwiftMacrosImplementation", type: "CloudKitModelMacro")

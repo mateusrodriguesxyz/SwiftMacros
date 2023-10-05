@@ -16,7 +16,7 @@ func upload(_ data: Data, completion: @escaping (Bool) -> Void) -> Void {
 
 
 @Equatable
-class Person {
+class Person1 {
     
     let name: String
     let age: Int
@@ -27,3 +27,16 @@ class Person {
     }
     
 }
+
+@DictionaryStorage
+struct Person2 {
+    var name: String = "Joao"
+    var age: Int = 25
+}
+
+//@CloudKitModel
+//struct Person3 {
+//    var name: String = "Joao"
+//    var age: Int = 25
+//}
+

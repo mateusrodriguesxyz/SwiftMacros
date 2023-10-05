@@ -11,5 +11,7 @@ struct SwiftMacrosPlugin: CompilerPlugin {
         AddAsyncMacro.self,
         EquatableMacro.self,
         DictionaryStoragePropertyMacro.self,
+        DictionaryStorageMacro.self,
+        CloudKitModelMacro.self
     ]
 }

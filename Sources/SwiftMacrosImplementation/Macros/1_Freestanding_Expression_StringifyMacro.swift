@@ -2,7 +2,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public struct StringifyMacro { }
+public enum StringifyMacro { }
 
 extension StringifyMacro: ExpressionMacro {
     
