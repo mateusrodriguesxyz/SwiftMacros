@@ -1,7 +1,9 @@
+https://swift-ast-explorer.com
 
-# CloudKitModel 
 
-Given:
+# CloudKitModel + CloudKitModelProperty Macros
+
+Input:
 
 ```swift
 @CloudKitModel
@@ -11,10 +13,29 @@ struct Person {
 }
 ```
 
-Expand to:
+Output (Step 1):
+
+```
+struct Person: CloudKitModel {
+
+    var record: CKRecord = CKRecord(recordType: "Person")
+
+    @CloudKitModelProperty
+    var name: String?
+    @CloudKitModelProperty
+    var age: Int?
+
+    init(name: String, age: Int) {
+        self.record["name"] = name
+        self.record["age"] = age
+    }
+
+}
+```
+
+Output (Step2):
 
 ```swift
-@CloudKitModel
 struct Person: CloudKitModel {
     
     var record: CKRecord = CKRecord(recordType: "Person")
